@@ -26,3 +26,11 @@ Crearemos un formulario en el que introducir los datos del alumno con [Formik](h
 **Extras**
 
 Una vez terminado lo anterior, investigaremos en [AutoAnimate](https://auto-animate.formkit.com/#usage-react) las diferentes opciones para ordenar los alumnos por diferentes criterios haciendo uso de un dropdown.
+
+**Funcionalidad**
+
+Recogeremos todos los datos de alumnos en un array de objetos, el cual guardaremos en localStorage. Crearemos un useState en el cual recuperaremos los datos de los alumnos y se imprimrán en pantalla. Para imprimirlos, crearemos una tabla con el header fijo y luego iremos imprimiendo las filas con los datos de los alumnos mapeando el array original e imprimiendo los objetos uno por uno.
+
+Para añadir alumnos, haremos una copia del array almacenado en el localStorage y a dicha copia le añadiremos los alumnos nuevos con los datos recogidos en el formulario al pulsar el botón validar. La copia del array de objetos original junto con los nuevos introducidos se almacenara en un nuevo setState, se le pasará como parámetro al anterior setState y se almacernará en el localStorage con los nuevos datos.
+
+Para editar o borrar alumnos, repetiremos el proceso anterior pero a la función le pasaremos como parámetro el alumno en el que se ha hecho clic en borrar. Haremos la copia del array y sobre la copia filtraremos el objeto que coincida con el del botón pulsado y lo eliminaremos del array o modificaremos sus datos. Pasamos el array temporal como parámetro al array original y lo almacenamos de nuevo en el localStorage.
