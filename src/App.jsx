@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { Field, Form, Formik } from 'formik';
 
 function App() {
 
@@ -22,6 +23,12 @@ function App() {
     Completado: "80%",
   },
 ]);
+
+const addStudent = (values) => {
+  let tempStudentsList = [...studentsList];
+  tempStudentsList.push(values);
+  setStudentsList(tempStudentsList);
+}
 
   return (
     <>
@@ -53,28 +60,50 @@ function App() {
               <td>{e.Curso}</td>
               <td>{e.Alta}</td>
               <td>{e.Media}</td>
-              <td>{e.Completado}</td>
+              <td>{e.Completado}</td><i className='ri-delete-bin-line'></i>
             </tr>
-            )}
+            )} 
           </tbody>
         </table>
-        <button type='button' className='btn btn-primary' data-toggle="modal" data-target="#crearAlumno">Crear alumno</button>
+        <button type='button' className='btn btn-primary' data-bs-toggle="modal" data-bs-target="#crearAlumno">Crear alumno</button>
 
         <div className='modal fade' id="crearAlumno" tabIndex={-1} role='dialog' aria-labelledby='crearAlumnoLabel' aria-hidden="true">
           <div className='modal-dialog' role='document'>
             <div className='modal-content'>
               <div className='modal-header'>
                 <h5 className='modal-title' id="crearAlumnoLabel">Crear alumno</h5>
-                <button type="button" className='close' data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                <button type="button" className='btn-close' data-bs-dismiss="modal" aria-label="Close">
                 </button>
               </div>
               <div className='modal-body'>
-                Hello
+                <Formik
+                  initialValues={{
+                    name: '',
+                    surname: '',
+                    age: '',
+                    year: '',
+                    date: '',
+                    avg: '',
+                    compl: '',
+                  }}
+                  onSubmit={(values) => addStudent(values)}
+                  >
+                    {() => (
+                      <Form>
+                        <Field type="text" name="Nombre" placeholder="Nombre" />
+                        <Field type="text" name="Apellidos" placeholder="Apellidos" />
+                        <Field type="number" name="Edad" placeholder="Edad" />
+                        <Field type="text" name="Curso" placeholder="Curso" />
+                        <Field type="date" name="Alta" placeholder="Alta" />
+                        <Field type="float" name="Media" placeholder="Media" />
+                        <Field type="text" name="Completado" placeholder="Completado" />
+                        <button type="submit">Inscribir</button>
+                      </Form>
+                    )}
+                    </Formik>
               </div>
-              <div className='modal-foter'>
-                <button type='button' className='btn btn-secondary' data-dismiss="modal">Cerrar</button>
-                <button type='button' className='btn btn-primary'>Guardar</button>
+              <div className='modal-footer'>
+                <button type='button' className='btn btn-secondary' data-bs-dismiss="modal">Cerrar</button>
               </div>
             </div>
           </div>
