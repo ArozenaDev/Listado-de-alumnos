@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
+import * as Yup from 'yup';
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
     Completado: "80%",
   },
 ]);
+
+console.log(studentsList);
 
 const addStudent = (values) => {
   let tempStudentsList = [...studentsList];
@@ -86,6 +89,15 @@ const addStudent = (values) => {
                     avg: '',
                     compl: '',
                   }}
+                  validationSchema={Yup.object({
+                    Nombre: Yup.string().required('Campo obligatorio'),
+                    Apellidos: Yup.string().required('Campo obligatorio'),
+                    Edad: Yup.number().required('Campo obligatorio').min(18, 'No menores de edad'),
+                    Curso: Yup.number().required('Campo obligatorio'),
+                    Alta: Yup.date().required('Campo obligatorio'),
+                    Media: Yup.number().required('Campo obligatorio'),
+                    Completado: Yup.number().required('Campo obligatorio'),
+                  })}
                   onSubmit={(values) => addStudent(values)}
                   >
                     {() => (
