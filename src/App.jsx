@@ -9,7 +9,7 @@ function App() {
     Nombre: "Paco",
     Apellidos: "Pérez López",
     Edad: 44,
-    Curso: "3º",
+    Curso: 1,
     Alta: 22/11/2013,
     Media: 0.5,
     Completado: "30%",
@@ -18,20 +18,24 @@ function App() {
     Nombre: "Aitor",
     Apellidos: "Tilla Francesa",
     Edad: 12,
-    Curso: "1º",
+    Curso: 2,
     Alta: 20/5/2020,
     Media: 9,
     Completado: "80%",
   },
 ]);
 
+const [cursos] = useState(['Freshman', 'Sophomore', 'Junior', 'Senior']);
+
 console.log(studentsList);
 
-const addStudent = (values) => {
+const addStudent = (values, {resetForm}) => {
   let tempStudentsList = [...studentsList];
   tempStudentsList.push(values);
   setStudentsList(tempStudentsList);
+  resetForm();
 }
+
 
   return (
     <>
@@ -60,7 +64,7 @@ const addStudent = (values) => {
               <td>{e.Nombre}</td>
               <td>{e.Apellidos}</td>
               <td>{e.Edad}</td>
-              <td>{e.Curso}</td>
+              <td>{cursos[e.Curso]}</td>
               <td>{e.Alta}</td>
               <td>{e.Media}</td>
               <td>{e.Completado}</td><i className='ri-delete-bin-line'></i>
@@ -81,13 +85,13 @@ const addStudent = (values) => {
               <div className='modal-body'>
                 <Formik
                   initialValues={{
-                    name: '',
-                    surname: '',
-                    age: '',
-                    year: '',
-                    date: '',
-                    avg: '',
-                    compl: '',
+                    Nombre: '',
+                    Apellidos: '',
+                    Edad: '',
+                    Curso: '',
+                    Alta: '',
+                    Media: '',
+                    Completado: '',
                   }}
                   validationSchema={Yup.object({
                     Nombre: Yup.string().required('Campo obligatorio'),
@@ -98,17 +102,35 @@ const addStudent = (values) => {
                     Media: Yup.number().required('Campo obligatorio'),
                     Completado: Yup.number().required('Campo obligatorio'),
                   })}
-                  onSubmit={(values) => addStudent(values)}
+                  validateOnBlur={false}
+                  validateOnChange={false}
+                  onSubmit={addStudent}
                   >
-                    {() => (
+                    {({errors}) => (
                       <Form>
-                        <Field type="text" name="Nombre" placeholder="Nombre" />
-                        <Field type="text" name="Apellidos" placeholder="Apellidos" />
-                        <Field type="number" name="Edad" placeholder="Edad" />
-                        <Field type="text" name="Curso" placeholder="Curso" />
-                        <Field type="date" name="Alta" placeholder="Alta" />
-                        <Field type="float" name="Media" placeholder="Media" />
-                        <Field type="text" name="Completado" placeholder="Completado" />
+                        <Field type="text" name="Nombre" placeholder="Nombre" style={errors.Nombre && {borderColor: 'red'}}/>
+                        <Field type="text" name="Apellidos" placeholder="Apellidos" style={errors.Apellidos && {borderColor: 'red'}} />
+                        <Field type="number" name="Edad" placeholder="Edad" style={errors.Edad && {borderColor: 'red'}} />
+                        <Field type as="select" name="Curso" placeholder="Curso" style={errors.Curso && {borderColor: 'red'}}>
+                          <option value="0">Freshman</option>
+                          <option value="1">Sophomore</option>
+                          <option value="2">Junior</option>
+                          <option value="3">Senior</option>
+                        </Field>
+                        <Field type="date" name="Alta" placeholder="Alta" style={errors.Alta && {borderColor: 'red'}} />
+                        <Field type="float" name="Media" placeholder="Media" style={errors.Media && {borderColor: 'red'}} />
+                        <Field type="text" name="Completado" placeholder="Completado" style={errors.Completado && {borderColor: 'red'}} />
+                        {errors && (
+                          <>
+                          <div>{errors.Nombre && <span>Nombre: {errors.Nombre}</span>}</div>
+                          <div>{errors.Apellidos && <span>Apellidos: {errors.Apellidos}</span>}</div>
+                          <div>{errors.Edad && <span>Edad: {errors.Edad}</span>}</div>
+                          <div>{errors.Curso && <span>Curso: {errors.Curso}</span>}</div>
+                          <div>{errors.Alta && <span>Alta: {errors.Alta}</span>}</div>
+                          <div>{errors.Media && <span>Media: {errors.Media}</span>}</div>
+                          <div>{errors.Completado && <span>Completado: {errors.Completado}</span>}</div>
+                          </>
+                        )}
                         <button type="submit">Inscribir</button>
                       </Form>
                     )}
