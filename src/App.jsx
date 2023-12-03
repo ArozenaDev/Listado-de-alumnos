@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 function App() {
 
@@ -12,7 +14,7 @@ function App() {
     Curso: 1,
     Alta: 22/11/2013,
     Media: 0.5,
-    Completado: "30%",
+    Completado: 88,
   },
   {
     Nombre: "Aitor",
@@ -21,7 +23,7 @@ function App() {
     Curso: 2,
     Alta: 20/5/2020,
     Media: 9,
-    Completado: "80%",
+    Completado: 33,
   },
 ]);
 
@@ -67,7 +69,7 @@ const addStudent = (values, {resetForm}) => {
               <td>{cursos[e.Curso]}</td>
               <td>{e.Alta}</td>
               <td>{e.Media}</td>
-              <td>{e.Completado}</td><i className='ri-delete-bin-line'></i>
+              <td><Progress percent={e.Completado}/></td><i className='ri-delete-bin-line'></i>
             </tr>
             )} 
           </tbody>
@@ -88,7 +90,7 @@ const addStudent = (values, {resetForm}) => {
                     Nombre: '',
                     Apellidos: '',
                     Edad: '',
-                    Curso: '',
+                    Curso: '0',
                     Alta: '',
                     Media: '',
                     Completado: '',
@@ -97,10 +99,10 @@ const addStudent = (values, {resetForm}) => {
                     Nombre: Yup.string().required('Campo obligatorio'),
                     Apellidos: Yup.string().required('Campo obligatorio'),
                     Edad: Yup.number().required('Campo obligatorio').min(18, 'No menores de edad'),
-                    Curso: Yup.number().required('Campo obligatorio'),
+                    Curso: Yup.string().required('Campo obligatorio'),
                     Alta: Yup.date().required('Campo obligatorio'),
                     Media: Yup.number().required('Campo obligatorio'),
-                    Completado: Yup.number().required('Campo obligatorio'),
+                    Completado: Yup.number().required('Campo obligatorio').max(100, 'máximo 100, sin %'),
                   })}
                   validateOnBlur={false}
                   validateOnChange={false}
@@ -119,7 +121,7 @@ const addStudent = (values, {resetForm}) => {
                         </Field>
                         <Field type="date" name="Alta" placeholder="Alta" style={errors.Alta && {borderColor: 'red'}} />
                         <Field type="float" name="Media" placeholder="Media" style={errors.Media && {borderColor: 'red'}} />
-                        <Field type="text" name="Completado" placeholder="Completado" style={errors.Completado && {borderColor: 'red'}} />
+                        <Field type="text" name="Completado" placeholder="Completado" style={errors.Completado && {borderColor: 'red'}} />%
                         {errors && (
                           <>
                           <div>{errors.Nombre && <span>Nombre: {errors.Nombre}</span>}</div>
