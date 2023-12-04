@@ -101,7 +101,10 @@ const addStudent = (values, {resetForm}) => {
                     Edad: Yup.number().required('Campo obligatorio').min(18, 'No menores de edad'),
                     Curso: Yup.string().required('Campo obligatorio'),
                     Alta: Yup.date().required('Campo obligatorio'),
-                    Media: Yup.number().required('Campo obligatorio'),
+                    Media: Yup.number().required('Campo obligatorio').test('dosDecimales', 'Máximo 2 decimales', value => {
+                      const [, decimals] = value.toString().split('.');
+                      return !decimals || decimals.length <=2;
+                    }),
                     Completado: Yup.number().required('Campo obligatorio').max(100, 'máximo 100, sin %'),
                   })}
                   validateOnBlur={false}
