@@ -68,8 +68,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {studentsList.map((e) => (
-              <tr scope="row" key={e.Nombre}>
+            {studentsList.map((e, i) => (
+              <tr scope="row" key={i}>
                 <td>{e.Nombre}</td>
                 <td>{e.Apellidos}</td>
                 <td>{e.Edad}</td>
@@ -80,6 +80,13 @@ function App() {
                   <Progress percent={e.Completado} />
                 </td>
                 <td>
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                  >
+                    <i className="ri-delete-bin-5-fill"></i>
+                  </button>
+                  <span>  </span>
                   <button
                     type="button"
                     className="btn btn-primary"
