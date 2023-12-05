@@ -44,6 +44,7 @@ function App() {
     setStudentsList(tempStudentsList);
   };
 
+  console.log(studentsList);
   return (
     <>
       <div className="container-md">
@@ -85,7 +86,7 @@ function App() {
                     data-bs-toggle="modal"
                     data-bs-target="#editarAlumno"
                   >
-                    <i className="ri-delete-bin-line"></i>
+                    <i className="ri-edit-2-fill"></i>
                   </button>
                   <div
                     className="modal fade"
@@ -119,13 +120,148 @@ function App() {
                               Media: "",
                               Completado: "",
                             }}
+                            validationSchema={Yup.object({
+                              Nombre:
+                                Yup.string().required("Campo obligatorio"),
+                              Apellidos:
+                                Yup.string().required("Campo obligatorio"),
+                              Edad: Yup.number()
+                                .required("Campo obligatorio")
+                                .min(18, "No menores de edad"),
+                              Curso: Yup.string().required("Campo obligatorio"),
+                              Alta: Yup.date()
+                                .required("Campo obligatorio")
+                                .max(
+                                  new Date(),
+                                  "La fecha no puede ser posterior a hoy"
+                                ),
+                              Media: Yup.number()
+                                .required("Campo obligatorio")
+                                .test(
+                                  "dosDecimales",
+                                  "Máximo 2 decimales",
+                                  (value) => {
+                                    const [, decimals] = value
+                                      .toString()
+                                      .split(".");
+                                    return !decimals || decimals.length <= 2;
+                                  }
+                                ),
+                              Completado: Yup.number()
+                                .required("Campo obligatorio")
+                                .typeError("Introduce un número sin %")
+                                .max(100, "máximo 100, sin %"),
+                            })}
                             validateOnBlur={false}
                             validateOnChange={false}
                             onSubmit={removeStudent}
                           >
-                            <form>
-                              <button type="submit">Borrar</button>
-                            </form>
+                            {({ errors }) => (
+                              <Form>
+                                <Field
+                                  type="text"
+                                  name="Nombre"
+                                  placeholder="Nombre"
+                                  style={
+                                    errors.Nombre && { borderColor: "red" }
+                                  }
+                                />
+                                <Field
+                                  type="text"
+                                  name="Apellidos"
+                                  placeholder="Apellidos"
+                                  style={
+                                    errors.Apellidos && { borderColor: "red" }
+                                  }
+                                />
+                                <Field
+                                  type="number"
+                                  name="Edad"
+                                  placeholder="Edad"
+                                  style={errors.Edad && { borderColor: "red" }}
+                                />
+                                <Field
+                                  type
+                                  as="select"
+                                  name="Curso"
+                                  placeholder="Curso"
+                                  style={errors.Curso && { borderColor: "red" }}
+                                >
+                                  <option value="0">Freshman</option>
+                                  <option value="1">Sophomore</option>
+                                  <option value="2">Junior</option>
+                                  <option value="3">Senior</option>
+                                </Field>
+                                <Field
+                                  type="date"
+                                  name="Alta"
+                                  placeholder="Alta"
+                                  style={errors.Alta && { borderColor: "red" }}
+                                />
+                                <Field
+                                  type="float"
+                                  name="Media"
+                                  placeholder="Media"
+                                  style={errors.Media && { borderColor: "red" }}
+                                />
+                                <Field
+                                  type="text"
+                                  name="Completado"
+                                  placeholder="Completado"
+                                  style={
+                                    errors.Completado && { borderColor: "red" }
+                                  }
+                                />
+                                %
+                                {errors && (
+                                  <>
+                                    <div>
+                                      {errors.Nombre && (
+                                        <span>Nombre: {errors.Nombre}</span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Apellidos && (
+                                        <span>
+                                          Apellidos: {errors.Apellidos}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Edad && (
+                                        <span>Edad: {errors.Edad}</span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Curso && (
+                                        <span>Curso: {errors.Curso}</span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Alta && (
+                                        <span>Alta: {errors.Alta}</span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Media && (
+                                        <span>Media: {errors.Media}</span>
+                                      )}
+                                    </div>
+                                    <div>
+                                      {errors.Completado && (
+                                        <span>
+                                          Completado: {errors.Completado}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </>
+                                )}
+                                <button type="submit">Editar</button>
+                                <button type="button" onClick={() => removeStudent()}>
+                                  Borrar
+                                </button>
+                              </Form>
+                            )}
                           </Formik>
                         </div>
                         <div className="modal-footer">
