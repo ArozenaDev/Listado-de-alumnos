@@ -33,14 +33,23 @@ function App() {
 
   const addStudent = (values, { resetForm }) => {
     let tempStudentsList = [...studentsList];
-    tempStudentsList.push(values);
+    let tempValues = {
+      id: Math.random(),
+      Nombre: values.Nombre,
+      Apellidos: values.Apellidos,
+      Edad: values.Edad,
+      Curso: values.Curso,
+      Alta: values.Alta,
+      Media: values.Media,
+      Completado: values.Completado,
+    };
+    tempStudentsList.push(tempValues);
     setStudentsList(tempStudentsList);
     resetForm();
   };
 
-  const removeStudent = (values) => {
-    let tempStudentsList = [...studentsList];
-    tempStudentsList.pop(values);
+  const removeStudent = (id) => {
+    let tempStudentsList = studentsList.filter((student) => student.id !== id);
     setStudentsList(tempStudentsList);
   };
 
@@ -68,8 +77,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {studentsList.map((e, i) => (
-              <tr scope="row" key={i}>
+            {studentsList.map((e) => (
+              <tr scope="row" key={e.id}>
                 <td>{e.Nombre}</td>
                 <td>{e.Apellidos}</td>
                 <td>{e.Edad}</td>
@@ -83,6 +92,7 @@ function App() {
                 <button
                     type="button"
                     className="btn btn-primary"
+                    onClick={() => removeStudent(e.id)}
                   >
                     <i className="ri-delete-bin-5-fill"></i>
                   </button>
@@ -264,9 +274,6 @@ function App() {
                                   </>
                                 )}
                                 <button type="submit">Editar</button>
-                                <button type="button" onClick={() => removeStudent()}>
-                                  Borrar
-                                </button>
                               </Form>
                             )}
                           </Formik>
