@@ -8,20 +8,22 @@ import dayjs from "dayjs";
 function App() {
   const [studentsList, setStudentsList] = useState([
     {
+      id: 1,
       Nombre: "Paco",
       Apellidos: "Pérez López",
       Edad: 44,
       Curso: 1,
-      Alta: 22 / 11 / 2013,
+      Alta: 22/11/2013,
       Media: 0.5,
       Completado: 88,
     },
     {
+      id: 2,
       Nombre: "Aitor",
       Apellidos: "Tilla Francesa",
       Edad: 12,
       Curso: 2,
-      Alta: 20 / 5 / 2020,
+      Alta: 20/5/2020,
       Media: 9,
       Completado: 33,
     },
