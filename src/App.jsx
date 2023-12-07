@@ -53,10 +53,23 @@ function App() {
     setStudentsList(tempStudentsList);
   };
 
+  const [studentFound, setStudentFound] = useState([]) ;
+  
   const edit = (id) => {
-    let studentFound = studentsList.find(student => student.id === id);
-    console.log(studentFound);
-    return studentFound;
+    let studentsFound = studentsList.find((student) => student.id === id);
+    let tempFound = [];
+    let tempStudent = {
+      id: studentsFound.id,
+      Nombre: studentsFound.Nombre,
+      Apellidos: studentsFound.Apellidos,
+      Edad: studentsFound.Edad,
+      Curso: studentsFound.Curso,
+      Alta: studentsFound.Alta,
+      Media: studentsFound.Media,
+      Completado: studentsFound.Completado,
+    }
+    tempFound.push(tempStudent);
+    setStudentFound(tempFound);
   }
  
   return (
@@ -133,7 +146,19 @@ function App() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                          <p>Aquí irian los datos del alumno a editar</p>
+                            <ul>
+                              {studentFound.map((f) => (
+                            <>
+                            <li key={f.id}>{f.Nombre}</li>
+                            <li>{f.Apellidos}</li>
+                            <li>{f.Edad}</li>
+                            <li>{cursos[f.Curso]}</li>
+                            <li>{dayjs(f.Alta).format("DD/MM/YYYY")}</li>
+                            <li>{f.Media}</li>
+                            <li><Progress percent={f.Completado} /></li>
+                            </>
+                              ))}
+                            </ul>
                         </div>
                         <div className="modal-footer">
                           <button
