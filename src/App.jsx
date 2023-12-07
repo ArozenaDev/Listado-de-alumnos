@@ -13,7 +13,7 @@ function App() {
       Apellidos: "Pérez López",
       Edad: 44,
       Curso: 1,
-      Alta: 22/11/2013,
+      Alta: 22 / 11 / 2013,
       Media: 0.5,
       Completado: 88,
     },
@@ -23,7 +23,7 @@ function App() {
       Apellidos: "Tilla Francesa",
       Edad: 12,
       Curso: 2,
-      Alta: 20/5/2020,
+      Alta: 20 / 5 / 2020,
       Media: 9,
       Completado: 33,
     },
@@ -53,8 +53,8 @@ function App() {
     setStudentsList(tempStudentsList);
   };
 
-  const [studentFound, setStudentFound] = useState([]) ;
-  
+  const [studentFound, setStudentFound] = useState([]);
+
   const edit = (id) => {
     let studentsFound = studentsList.find((student) => student.id === id);
     let tempFound = [];
@@ -67,11 +67,11 @@ function App() {
       Alta: studentsFound.Alta,
       Media: studentsFound.Media,
       Completado: studentsFound.Completado,
-    }
+    };
     tempFound.push(tempStudent);
     setStudentFound(tempFound);
-  }
- 
+  };
+
   return (
     <>
       <div className="container-md">
@@ -107,14 +107,14 @@ function App() {
                   <Progress percent={e.Completado} />
                 </td>
                 <td>
-                <button
+                  <button
                     type="button"
                     className="btn btn-primary"
                     onClick={() => removeStudent(e.id)}
                   >
                     <i className="ri-delete-bin-5-fill"></i>
                   </button>
-                  <span>  </span>
+                  <span> </span>
                   <button
                     type="button"
                     className="btn btn-primary"
@@ -146,19 +146,183 @@ function App() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                            <ul>
-                              {studentFound.map((f) => (
+                          {studentFound.map((f) => (
                             <>
-                            <li key={f.id}>{f.Nombre}</li>
-                            <li>{f.Apellidos}</li>
-                            <li>{f.Edad}</li>
-                            <li>{cursos[f.Curso]}</li>
-                            <li>{dayjs(f.Alta).format("DD/MM/YYYY")}</li>
-                            <li>{f.Media}</li>
-                            <li><Progress percent={f.Completado} /></li>
+                              <Formik
+                                initialValues={{
+                                  Nombre: f.Nombre,
+                                  Apellidos: f.Apellidos,
+                                  Edad: f.Edad,
+                                  Curso: cursos[f.Curso],
+                                  Alta: f.Alta,
+                                  Media: f.Media,
+                                  Completado: f.Completado,
+                                }}
+                                validationSchema={Yup.object({
+                                  Nombre:
+                                    Yup.string().required("Campo obligatorio"),
+                                  Apellidos:
+                                    Yup.string().required("Campo obligatorio"),
+                                  Edad: Yup.number()
+                                    .required("Campo obligatorio")
+                                    .min(18, "No menores de edad"),
+                                  Curso:
+                                    Yup.string().required("Campo obligatorio"),
+                                  Alta: Yup.date()
+                                    .required("Campo obligatorio")
+                                    .max(
+                                      new Date(),
+                                      "La fecha no puede ser posterior a hoy"
+                                    ),
+                                  Media: Yup.number()
+                                    .required("Campo obligatorio")
+                                    .test(
+                                      "dosDecimales",
+                                      "Máximo 2 decimales",
+                                      (value) => {
+                                        const [, decimals] = value
+                                          .toString()
+                                          .split(".");
+                                        return (
+                                          !decimals || decimals.length <= 2
+                                        );
+                                      }
+                                    ),
+                                  Completado: Yup.number()
+                                    .required("Campo obligatorio")
+                                    .typeError("Introduce un número sin %")
+                                    .max(100, "máximo 100, sin %"),
+                                })}
+                                validateOnBlur={false}
+                                validateOnChange={false}
+                                onSubmit={""}
+                                enableReinitialize
+                              >
+                                {({ errors }) => (
+                                  <Form>
+                                    {errors && (
+                                      <>
+                                        <div>
+                                          {errors.Nombre && (
+                                            <span>Nombre: {errors.Nombre}</span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Apellidos && (
+                                            <span>
+                                              Apellidos: {errors.Apellidos}
+                                            </span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Edad && (
+                                            <span>Edad: {errors.Edad}</span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Curso && (
+                                            <span>Curso: {errors.Curso}</span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Alta && (
+                                            <span>Alta: {errors.Alta}</span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Media && (
+                                            <span>Media: {errors.Media}</span>
+                                          )}
+                                        </div>
+                                        <div>
+                                          {errors.Completado && (
+                                            <span>
+                                              Completado: {errors.Completado}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </>
+                                    )}
+                                    <Field
+                                      type="text"
+                                      name="Nombre"
+                                      placeholder="Nombre"
+                                      style={
+                                        errors.Nombre && { borderColor: "red" }
+                                      }
+                                    />
+                                    <Field
+                                      type="text"
+                                      name="Apellidos"
+                                      placeholder="Apellidos"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    />
+                                    <Field
+                                      type="number"
+                                      name="Edad"
+                                      placeholder="Edad"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    />
+                                    <Field
+                                      type
+                                      as="select"
+                                      name="Curso"
+                                      placeholder="Curso"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    >
+                                      <option value="0">Freshman</option>
+                                      <option value="1">Sophomore</option>
+                                      <option value="2">Junior</option>
+                                      <option value="3">Senior</option>
+                                    </Field>
+                                    <Field
+                                      type="date"
+                                      name="Alta"
+                                      placeholder="Alta"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    />
+                                    <Field
+                                      type="float"
+                                      name="Media"
+                                      placeholder="Media"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    />
+                                    <Field
+                                      type="text"
+                                      name="Completado"
+                                      placeholder="Completado"
+                                      style={
+                                        errors.Apellidos && {
+                                          borderColor: "red",
+                                        }
+                                      }
+                                    />
+                                     <button type="submit">Editar</button>
+                                  </Form>
+                                )}
+                              </Formik>
                             </>
-                              ))}
-                            </ul>
+                          ))}
                         </div>
                         <div className="modal-footer">
                           <button
