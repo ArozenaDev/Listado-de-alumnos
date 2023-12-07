@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Progress } from "react-sweet-progress";
@@ -31,8 +31,6 @@ function App() {
 
   const [cursos] = useState(["Freshman", "Sophomore", "Junior", "Senior"]);
 
-  console.log(studentsList);
-
   const addStudent = (values, { resetForm }) => {
     let tempStudentsList = [...studentsList];
     let tempValues = {
@@ -55,7 +53,12 @@ function App() {
     setStudentsList(tempStudentsList);
   };
 
-  console.log(studentsList);
+  const edit = (id) => {
+    let studentFound = studentsList.find(student => student.id === id);
+    console.log(studentFound);
+    return studentFound;
+  }
+ 
   return (
     <>
       <div className="container-md">
@@ -104,6 +107,7 @@ function App() {
                     className="btn btn-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#editarAlumno"
+                    onClick={() => edit(e.id)}
                   >
                     <i className="ri-edit-2-fill"></i>
                   </button>
@@ -119,7 +123,7 @@ function App() {
                       <div className="modal-content">
                         <div className="modal-header">
                           <h5 className="modal-title" id="editarAlumnoLabel">
-                            Editar
+                            Editar Alumno
                           </h5>
                           <button
                             type="button"
@@ -129,7 +133,7 @@ function App() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                         Aquí ira un formulario con useEffect en un componente
+                          <p>Aquí irian los datos del alumno a editar</p>
                         </div>
                         <div className="modal-footer">
                           <button
