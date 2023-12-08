@@ -72,6 +72,23 @@ function App() {
     setStudentFound(tempFound);
   };
 
+  const change = (values) => {
+    let tempStudentsList = [...studentsList];
+    let tempValues = [{
+      id: values.id,
+      Nombre: values.Nombre,
+      Apellidos: values.Apellidos,
+      Edad: values.Edad,
+      Curso: values.Curso,
+      Alta: values.Alta,
+      Media: values.Media,
+      Completado: values.Completado,
+    }];
+    let merge = Object.assign(tempStudentsList, tempValues);
+    console.log(merge);
+    setStudentsList(merge);
+  }
+
   return (
     <>
       <div className="container-md">
@@ -150,6 +167,7 @@ function App() {
                             <>
                               <Formik
                                 initialValues={{
+                                  id: f.id,
                                   Nombre: f.Nombre,
                                   Apellidos: f.Apellidos,
                                   Edad: f.Edad,
@@ -195,7 +213,7 @@ function App() {
                                 })}
                                 validateOnBlur={false}
                                 validateOnChange={false}
-                                onSubmit={""}
+                                onSubmit={change}
                                 enableReinitialize
                               >
                                 {({ errors }) => (
