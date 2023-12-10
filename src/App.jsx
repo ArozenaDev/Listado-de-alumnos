@@ -74,20 +74,22 @@ function App() {
 
   const change = (values) => {
     let tempStudentsList = [...studentsList];
-    let tempValues = [{
-      id: values.id,
-      Nombre: values.Nombre,
-      Apellidos: values.Apellidos,
-      Edad: values.Edad,
-      Curso: values.Curso,
-      Alta: values.Alta,
-      Media: values.Media,
-      Completado: values.Completado,
-    }];
+    let tempValues = [
+      {
+        id: values.id,
+        Nombre: values.Nombre,
+        Apellidos: values.Apellidos,
+        Edad: values.Edad,
+        Curso: values.Curso,
+        Alta: values.Alta,
+        Media: values.Media,
+        Completado: values.Completado,
+      },
+    ];
     let merge = Object.assign(tempStudentsList, tempValues);
     console.log(merge);
     setStudentsList(merge);
-  }
+  };
 
   return (
     <>
@@ -261,81 +263,152 @@ function App() {
                                         </div>
                                       </>
                                     )}
-                                    <Field
-                                      type="text"
-                                      name="Nombre"
-                                      placeholder="Nombre"
-                                      style={
-                                        errors.Nombre && { borderColor: "red" }
-                                      }
-                                    />
-                                    <Field
-                                      type="text"
-                                      name="Apellidos"
-                                      placeholder="Apellidos"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Nombre
+                                      </span>
+                                      <Field
+                                        type="text"
+                                        name="Nombre"
+                                        placeholder="Nombre"
+                                        className="form-control"
+                                        style={
+                                          errors.Nombre && {
+                                            borderColor: "red",
+                                          }
                                         }
-                                      }
-                                    />
-                                    <Field
-                                      type="number"
-                                      name="Edad"
-                                      placeholder="Edad"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
+                                      />
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Apellidos
+                                      </span>
+                                      <Field
+                                        type="text"
+                                        name="Apellidos"
+                                        placeholder="Apellidos"
+                                        className="form-control"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
                                         }
-                                      }
-                                    />
-                                    <Field
-                                      type
-                                      as="select"
-                                      name="Curso"
-                                      placeholder="Curso"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
+                                      />
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Edad
+                                      </span>
+                                      <Field
+                                        type="number"
+                                        name="Edad"
+                                        placeholder="Edad"
+                                        className="form-control"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
                                         }
-                                      }
+                                      />
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Curso
+                                      </span>
+                                      <Field
+                                        type
+                                        as="select"
+                                        name="Curso"
+                                        placeholder="Curso"
+                                        className="form-select"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
+                                        }
+                                      >
+                                        <option value="0">Freshman</option>
+                                        <option value="1">Sophomore</option>
+                                        <option value="2">Junior</option>
+                                        <option value="3">Senior</option>
+                                      </Field>
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Alta
+                                      </span>
+                                      <Field
+                                        type="date"
+                                        name="Alta"
+                                        placeholder="Alta"
+                                        className="form-control"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
+                                        }
+                                      />
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Media
+                                      </span>
+                                      <Field
+                                        type="float"
+                                        name="Media"
+                                        placeholder="Media"
+                                        className="form-control"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
+                                        }
+                                      />
+                                    </div>
+                                    <div className="input-group mb-3">
+                                      <span
+                                        className="input-group-text"
+                                        id="basic-addon1"
+                                      >
+                                        Completado
+                                      </span>
+                                      <Field
+                                        type="text"
+                                        name="Completado"
+                                        placeholder="Completado"
+                                        className="form-control"
+                                        style={
+                                          errors.Apellidos && {
+                                            borderColor: "red",
+                                          }
+                                        }
+                                      />
+                                      <span className="input-group-text" id="basic-addon2">%</span>
+                                    </div>
+                                    <button
+                                      type="submit"
+                                      className="btn btn-primary"
                                     >
-                                      <option value="0">Freshman</option>
-                                      <option value="1">Sophomore</option>
-                                      <option value="2">Junior</option>
-                                      <option value="3">Senior</option>
-                                    </Field>
-                                    <Field
-                                      type="date"
-                                      name="Alta"
-                                      placeholder="Alta"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
-                                        }
-                                      }
-                                    />
-                                    <Field
-                                      type="float"
-                                      name="Media"
-                                      placeholder="Media"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
-                                        }
-                                      }
-                                    />
-                                    <Field
-                                      type="text"
-                                      name="Completado"
-                                      placeholder="Completado"
-                                      style={
-                                        errors.Apellidos && {
-                                          borderColor: "red",
-                                        }
-                                      }
-                                    />
-                                     <button type="submit">Editar</button>
+                                      Editar
+                                    </button>
                                   </Form>
                                 )}
                               </Formik>
@@ -427,55 +500,6 @@ function App() {
                 >
                   {({ errors }) => (
                     <Form>
-                      <Field
-                        type="text"
-                        name="Nombre"
-                        placeholder="Nombre"
-                        style={errors.Nombre && { borderColor: "red" }}
-                      />
-                      <Field
-                        type="text"
-                        name="Apellidos"
-                        placeholder="Apellidos"
-                        style={errors.Apellidos && { borderColor: "red" }}
-                      />
-                      <Field
-                        type="number"
-                        name="Edad"
-                        placeholder="Edad"
-                        style={errors.Edad && { borderColor: "red" }}
-                      />
-                      <Field
-                        type
-                        as="select"
-                        name="Curso"
-                        placeholder="Curso"
-                        style={errors.Curso && { borderColor: "red" }}
-                      >
-                        <option value="0">Freshman</option>
-                        <option value="1">Sophomore</option>
-                        <option value="2">Junior</option>
-                        <option value="3">Senior</option>
-                      </Field>
-                      <Field
-                        type="date"
-                        name="Alta"
-                        placeholder="Alta"
-                        style={errors.Alta && { borderColor: "red" }}
-                      />
-                      <Field
-                        type="float"
-                        name="Media"
-                        placeholder="Media"
-                        style={errors.Media && { borderColor: "red" }}
-                      />
-                      <Field
-                        type="text"
-                        name="Completado"
-                        placeholder="Completado"
-                        style={errors.Completado && { borderColor: "red" }}
-                      />
-                      %
                       {errors && (
                         <>
                           <div>
@@ -507,7 +531,124 @@ function App() {
                           </div>
                         </>
                       )}
-                      <button type="submit">Inscribir</button>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Nombre
+                        </span>
+                        <Field
+                          type="text"
+                          name="Nombre"
+                          placeholder="Nombre"
+                          className="form-control"
+                          style={errors.Nombre && { borderColor: "red" }}
+                        />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Apellidos
+                        </span>
+                        <Field
+                          type="text"
+                          name="Apellidos"
+                          placeholder="Apellidos"
+                          className="form-control"
+                          style={
+                            errors.Apellidos && {
+                              borderColor: "red",
+                            }
+                          }
+                        />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Edad
+                        </span>
+                        <Field
+                          type="number"
+                          name="Edad"
+                          placeholder="Edad"
+                          className="form-control"
+                          style={
+                            errors.Edad && {
+                              borderColor: "red",
+                            }
+                          }
+                        />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Curso
+                        </span>
+                        <Field
+                          type
+                          as="select"
+                          name="Curso"
+                          placeholder="Curso"
+                          className="form-select"
+                          style={
+                            errors.Curso && {
+                              borderColor: "red",
+                            }
+                          }
+                        >
+                          <option value="0">Freshman</option>
+                          <option value="1">Sophomore</option>
+                          <option value="2">Junior</option>
+                          <option value="3">Senior</option>
+                        </Field>
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Alta
+                        </span>
+                        <Field
+                          type="date"
+                          name="Alta"
+                          placeholder="Alta"
+                          className="form-control"
+                          style={
+                            errors.Alta && {
+                              borderColor: "red",
+                            }
+                          }
+                        />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Media
+                        </span>
+                        <Field
+                          type="float"
+                          name="Media"
+                          placeholder="Media"
+                          className="form-control"
+                          style={
+                            errors.Media && {
+                              borderColor: "red",
+                            }
+                          }
+                        />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon1">
+                          Completado
+                        </span>
+                        <Field
+                          type="text"
+                          name="Completado"
+                          placeholder="Completado"
+                          className="form-control"
+                          style={
+                            errors.Completado && {
+                              borderColor: "red",
+                            }
+                          }
+                        />
+                          <span className="input-group-text" id="basic-addon2">%</span>
+                      </div>
+                      <button type="submit" className="btn btn-primary">
+                        Inscribir
+                      </button>
                     </Form>
                   )}
                 </Formik>
