@@ -3,9 +3,10 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 
-export default function createStudent(props) {
+export default function CreateStudent(props) {
+    // eslint-disable-next-line react/prop-types
     const {studentsList, setStudentsList} = props;
-    //const [cursos] = useState(["Freshman", "Sophomore", "Junior", "Senior"]);
+
     const addStudent = (values, { resetForm }) => {
         let tempStudentsList = [...studentsList];
         let tempValues = {
