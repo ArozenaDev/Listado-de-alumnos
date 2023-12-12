@@ -3,9 +3,9 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 export default function EditStudent(props) {
-    const [studentFound] = props;
-    const {studentsList, setStudentsList} = props;
-    const [cursos] = props;
+    const {studentFound, studentsList, setStudentsList} = props;
+
+    const [cursos] = useState([0, 1, 2, 3]);
 
       const change = (values) => {
         let tempStudentsList = [...studentsList];

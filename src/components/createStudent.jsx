@@ -31,7 +31,7 @@ export default function CreateStudent(props) {
                     Nombre: "",
                     Apellidos: "",
                     Edad: "",
-                    Curso: "0",
+                    Curso: 0,
                     Alta: "",
                     Media: "",
                     Completado: "",
@@ -42,7 +42,7 @@ export default function CreateStudent(props) {
                     Edad: Yup.number()
                       .required("Campo obligatorio")
                       .min(18, "No menores de edad"),
-                    Curso: Yup.string().required("Campo obligatorio"),
+                    Curso: Yup.number().required("Campo obligatorio"),
                     Alta: Yup.date()
                       .required("Campo obligatorio")
                       .max(new Date(), "La fecha no puede ser posterior a hoy"),
