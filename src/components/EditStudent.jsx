@@ -3,43 +3,30 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 export default function EditStudent(props) {
+    // eslint-disable-next-line react/prop-types
     const {studentFound, studentsList, setStudentsList} = props;
 
     const [cursos] = useState([0, 1, 2, 3]);
 
       const change = (values) => {
-        let tempStudentsList = [...studentsList];
-        let tempValues = [
-          {
-            id: values.id,
-            Nombre: values.Nombre,
-            Apellidos: values.Apellidos,
-            Edad: values.Edad,
-            Curso: values.Curso,
-            Alta: values.Alta,
-            Media: values.Media,
-            Completado: values.Completado,
-          },
-        ];
-        let merge = Object.assign(tempStudentsList, tempValues);
-        console.log(merge);
-        setStudentsList(merge);
+        // eslint-disable-next-line react/prop-types
+        let tempStudentsList = studentsList.filter((student) => student.id !== values.id);
+        tempStudentsList.push(values);
+        setStudentsList(tempStudentsList);
       };
 
     return (
         <>
-        {studentFound.map((f) => (
-                            <>
                               <Formik
                                 initialValues={{
-                                  id: f.id,
-                                  Nombre: f.Nombre,
-                                  Apellidos: f.Apellidos,
-                                  Edad: f.Edad,
-                                  Curso: cursos[f.Curso],
-                                  Alta: f.Alta,
-                                  Media: f.Media,
-                                  Completado: f.Completado,
+                                  id: studentFound.id,
+                                  Nombre: studentFound.Nombre,
+                                  Apellidos: studentFound.Apellidos,
+                                  Edad: studentFound.Edad,
+                                  Curso: cursos[studentFound.Curso],
+                                  Alta: studentFound.Alta,
+                                  Media: studentFound.Media,
+                                  Completado: studentFound.Completado,
                                 }}
                                 validationSchema={Yup.object({
                                   Nombre:
@@ -275,8 +262,6 @@ export default function EditStudent(props) {
                                   </Form>
                                 )}
                               </Formik>
-                              </>
-                              ))}
         </>
     )
 }

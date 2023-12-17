@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import * as Yup from "yup";
+import { useState } from "react";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import dayjs from "dayjs";
@@ -40,20 +39,8 @@ function App() {
   };
 
   const edit = (id) => {
-    let studentsFound = studentsList.find((student) => student.id === id);
-    let tempFound = [];
-    let tempStudent = {
-      id: studentsFound.id,
-      Nombre: studentsFound.Nombre,
-      Apellidos: studentsFound.Apellidos,
-      Edad: studentsFound.Edad,
-      Curso: studentsFound.Curso,
-      Alta: studentsFound.Alta,
-      Media: studentsFound.Media,
-      Completado: studentsFound.Completado,
-    };
-    tempFound.push(tempStudent);
-    setStudentFound(tempFound);
+    let studentFound = studentsList.find((student) => student.id === id);
+    setStudentFound(studentFound);
   };
 
   return (
