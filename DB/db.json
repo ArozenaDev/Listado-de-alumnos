@@ -1,0 +1,24 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "Nombre": "Paco",
+      "Apellidos": "Pérez López",
+      "Edad": 44,
+      "Curso": 1,
+      "Alta": "Nov 22, 2013",
+      "Media": 0.5,
+      "Completado": 88
+    },
+    {
+      "Nombre": "Juan",
+      "Apellidos": "Manzorro",
+      "Edad": 34,
+      "Curso": 0,
+      "Alta": "1902-02-22",
+      "Media": "34",
+      "Completado": "56",
+      "id": 2
+    }
+  ]
+}

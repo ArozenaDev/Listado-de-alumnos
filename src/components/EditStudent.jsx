@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 export default function EditStudent(props) {
     // eslint-disable-next-line react/prop-types
-    const {studentFound, studentsList, setStudentsList} = props;
+    const {getStudents, studentFound} = props;
 
     const [cursos] = useState([0, 1, 2, 3]);
 
-      const change = (values) => {
-        // eslint-disable-next-line react/prop-types
-        let tempStudentsList = studentsList.filter((student) => student.id !== values.id);
-        tempStudentsList.push(values);
-        setStudentsList(tempStudentsList);
-      };
+    const change = (values) => {
+      axios
+        .patch(`http://localhost:3000/students/${id}`)
+        .then(() => {
+          getStudents();
+        })
+        .catch((error) => console.log("ERROR", error.message));
+      }
 
     return (
         <>

@@ -1,27 +1,18 @@
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
 
 
 export default function CreateStudent(props) {
-    // eslint-disable-next-line react/prop-types
-    const {studentsList, setStudentsList} = props;
+    const {getStudents} = props;
 
     const addStudent = (values, { resetForm }) => {
-        let tempStudentsList = [...studentsList];
-        let tempValues = {
-          id: Math.random(),
-          Nombre: values.Nombre,
-          Apellidos: values.Apellidos,
-          Edad: values.Edad,
-          Curso: values.Curso,
-          Alta: values.Alta,
-          Media: values.Media,
-          Completado: values.Completado,
-        };
-        tempStudentsList.push(tempValues);
-        setStudentsList(tempStudentsList);
+        axios.post('http://localhost:3000/students', values).then(() => {
+          getStudents();
+        }).catch((error) => console.log('ERROR', error.message));
         resetForm();
       };
+      
 
     return (
         <>

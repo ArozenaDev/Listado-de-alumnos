@@ -1,46 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
 import dayjs from "dayjs";
 import CreateStudent from "./components/createStudent";
 import EditStudent from "./components/EditStudent";
+import axios from "axios";
 
 function App() {
-  const [studentsList, setStudentsList] = useState([
-    {
-      id: 1,
-      Nombre: "Paco",
-      Apellidos: "Pérez López",
-      Edad: 44,
-      Curso: 1,
-      Alta: 'Nov 22, 2013',
-      Media: 0.5,
-      Completado: 88,
-    },
-    {
-      id: 2,
-      Nombre: "Aitor",
-      Apellidos: "Tilla Francesa",
-      Edad: 12,
-      Curso: 2,
-      Alta: 'May 7, 2020',
-      Media: 9,
-      Completado: 33,
-    },
-  ]);
+  const [studentsList, setStudentsList] = useState([]);
+
+  const getStudents = () => {
+    axios
+      .get("http://localhost:3000/students")
+      .then((response) => {
+        setStudentsList(response.data);
+      })
+      .catch((error) => console.log("ERROR", error.message));
+  };
+
+  useEffect(() => {
+    getStudents();
+  }, []);
 
   const [cursos] = useState(["Freshman", "Sophomore", "Junior", "Senior"]);
 
   const [studentFound, setStudentFound] = useState([]);
 
   const removeStudent = (id) => {
-    let tempStudentsList = studentsList.filter((student) => student.id !== id);
-    setStudentsList(tempStudentsList);
+    axios
+      .delete(`http://localhost:3000/students/${id}`)
+      .then(() => {
+        getStudents();
+      })
+      .catch((error) => console.log("ERROR", error.message));
   };
 
   const edit = (id) => {
-    let studentFound = studentsList.find((student) => student.id === id);
-    setStudentFound(studentFound);
+    axios
+      .get(`http://localhost:3000/students/${id}`)
+      .then((response) => {
+        setStudentFound(response.data);
+      })
+      .catch((error) => console.log("ERROR", error.message));
   };
 
   return (
@@ -117,7 +118,10 @@ function App() {
                           ></button>
                         </div>
                         <div className="modal-body">
-                          <EditStudent studentsList={studentsList} setStudentsList={setStudentsList} studentFound={studentFound} />
+                          <EditStudent
+                            getStudents={getStudents}
+                            studentFound={studentFound}
+                          />
                         </div>
                         <div className="modal-footer">
                           <button
@@ -166,8 +170,7 @@ function App() {
                 ></button>
               </div>
               <div className="modal-body">
-                <CreateStudent studentsList={studentsList} setStudentsList={setStudentsList}
-                />
+                <CreateStudent getStudents={getStudents} />
               </div>
               <div className="modal-footer">
                 <button
