@@ -11,7 +11,7 @@ export default function EditStudent(props) {
 
     const change = (values) => {
       axios
-        .patch(`http://localhost:3000/students/${id}`)
+        .patch(`http://localhost:3000/students/${values.id}`, values)
         .then(() => {
           getStudents();
         })
